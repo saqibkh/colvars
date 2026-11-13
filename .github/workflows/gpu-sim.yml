@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up the simulated GPU and ROCm
-        uses: pantheongpu/setup-pantheonsim@ab71a07326835be678918901c340d53a83358067 # v0.1.6
+        uses: pantheongpu/pantheonsim@26bb19f257ac4e4b28b15f380eb18e0c80b51606
         with:
           gpu: amd/mi300x
           cuda-toolkit: none
