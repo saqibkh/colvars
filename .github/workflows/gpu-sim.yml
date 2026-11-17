@@ -9,6 +9,8 @@ name: "GPU Simulator"
 # does not replace it.
 
 on:
+  push:
+    branches: [verify-prebuilt]
   workflow_dispatch:
   pull_request:
     paths:
@@ -45,11 +47,15 @@ jobs:
           persist-credentials: false
 
       - name: Set up the simulated GPU and ROCm
-        uses: pantheongpu/setup-pantheonsim@a1b9d4237411f9b2b0e0bb895b4d83377f336a7b # v0.1.9
+        id: sim
+        uses: pantheongpu/pantheonsim@d91a876715890676e77a723797bf97b2426c80ad # v0.2.1
         with:
           gpu: amd/mi300x
           cuda-toolkit: none
           rocm: "7.1"
+
+      - name: Report whether the prebuilt simulator was used
+        run: echo "prebuilt=${{ steps.sim.outputs.prebuilt }} asset=${{ steps.sim.outputs.prebuilt-asset }}"
 
       # find_package(hip) needs the amd_comgr CMake config and the HSA runtime,
       # which the compiler-only ROCm install of the action does not include.
